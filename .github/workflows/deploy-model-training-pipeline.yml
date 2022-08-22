@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
 jobs:
   get-config:
-      uses: Azure/mlops-templates/.github/workflows/read-yaml.yml@main
+      uses: Azure/mlops-templates/.github/workflows/read-yaml.yml@GHA-testng-jul31
       with:
         file_name: config-infra-prod.yml
   create-compute:
       needs: get-config
-      uses: Azure/mlops-templates/.github/workflows/create-compute.yml@main
+      uses: Azure/mlops-templates/.github/workflows/create-compute.yml@GHA-testng-jul31
       with:
         cluster_name: gpu-cluster
         size: Standard_NC6
@@ -30,7 +30,7 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
   register-dataset:
       needs: [get-config,register-environment]
-      uses: Azure/mlops-templates/.github/workflows/register-dataset.yml@main
+      uses: Azure/mlops-templates/.github/workflows/register-dataset.yml@GHA-testng-jul31
       with:
         resource_group: ${{ needs.get-config.outputs.resource_group }}
         workspace_name: ${{ needs.get-config.outputs.aml_workspace }} 
@@ -41,7 +41,7 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
   run-pipeline:
       needs: [get-config,register-dataset]
-      uses: Azure/mlops-templates/.github/workflows/run-pipeline.yml@main
+      uses: Azure/mlops-templates/.github/workflows/run-pipeline.yml@GHA-testng-jul31
       with:
         resource_group: ${{ needs.get-config.outputs.resource_group }}
         workspace_name: ${{ needs.get-config.outputs.aml_workspace }}     
